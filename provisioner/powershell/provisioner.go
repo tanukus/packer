@@ -90,7 +90,8 @@ type Provisioner struct {
 func (p *Provisioner) defaultExecuteCommand() string {
 	baseCmd := `& { if (Test-Path variable:global:ProgressPreference)` +
 		`{set-variable -name variable:global:ProgressPreference -value 'SilentlyContinue'};` +
-		`. {{.Vars}}; &'{{.Path}}'; exit $LastExitCode }`
+		`{set-variable -name variable:global:ErrorActionPreference -value 'Continue'};` +
+		`. {{.Vars}};try { . '{{.Path}}' } catch { Write-Error $Error[0]; exit 1 }; exit $LastExitCode }`
 
 	if p.config.ExecutionPolicy == ExecutionPolicyNone {
 		return baseCmd
