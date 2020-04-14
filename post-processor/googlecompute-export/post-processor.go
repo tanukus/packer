@@ -22,6 +22,7 @@ type Config struct {
 	common.PackerConfig `mapstructure:",squash"`
 
 	AccountFile string `mapstructure:"account_file"`
+	IAP         bool   `mapstructure:"iap"`
 
 	DiskSizeGb          int64    `mapstructure:"disk_size"`
 	DiskType            string   `mapstructure:"disk_type"`
@@ -159,7 +160,7 @@ func (p *PostProcessor) PostProcess(ctx context.Context, ui packer.Ui, artifact 
 	}
 
 	driver, err := googlecompute.NewDriverGCE(ui, builderProjectId,
-		p.config.account, p.config.VaultGCPOauthEngine)
+		p.config.account, p.config.VaultGCPOauthEngine, p.config.IAP)
 	if err != nil {
 		return nil, false, false, err
 	}

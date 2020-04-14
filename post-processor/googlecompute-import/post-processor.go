@@ -28,6 +28,7 @@ type Config struct {
 
 	AccountFile string `mapstructure:"account_file"`
 	ProjectId   string `mapstructure:"project_id"`
+	IAP         string `mapstructure:"iap"`
 
 	Bucket               string            `mapstructure:"bucket"`
 	GCSObjectName        string            `mapstructure:"gcs_object_name"`
@@ -117,7 +118,7 @@ func (p *PostProcessor) PostProcess(ctx context.Context, ui packer.Ui, artifact 
 	}
 	p.config.ctx.Data = generatedData
 
-	client, err := googlecompute.NewClientGCE(p.config.account, p.config.VaultGCPOauthEngine)
+	client, err := googlecompute.NewClientGCE(p.config.account, p.config.VaultGCPOauthEngine, p.config.IAP)
 	if err != nil {
 		return nil, false, false, err
 	}
