@@ -57,6 +57,10 @@ type Config struct {
 	// Type of disk used to back your instance, like pd-ssd or pd-standard.
 	// Defaults to pd-standard.
 	DiskType string `mapstructure:"disk_type" required:"false"`
+	// Whether to use an IAP proxy.
+	IAP bool `mapstructure:"iap"`
+	// Which port to connect the other end of the IAM localhost proxy to, if you care.
+	IAPLocalhostPort int `mapstructure:"iap_localhost_port"`
 	// The unique name of the resulting image. Defaults to
 	// `packer-{{timestamp}}`.
 	ImageName string `mapstructure:"image_name" required:"false"`
@@ -335,7 +339,7 @@ func (c *Config) Prepare(raws ...interface{}) ([]string, error) {
 			errs = packer.MultiErrorAppend(errs, fmt.Errorf("You cannot "+
 				"specify both account_file and vault_gcp_oauth_engine."))
 		}
-		cfg, err := ProcessAccountFile(c.AccountFile)
+		cfg, err := ProcessAccountFile(c.AccountFile, c.IAP)
 		if err != nil {
 			errs = packer.MultiErrorAppend(errs, err)
 		}

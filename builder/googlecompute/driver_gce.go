@@ -36,9 +36,9 @@ type driverGCE struct {
 
 func getDriverScopes(iap bool) []string {
 	ds := []string{"https://www.googleapis.com/auth/compute", "https://www.googleapis.com/auth/devstorage.full_control"}
-	if iap {
-		ds = append(ds, "https://www.googleapis.com/auth/iap.tunnelResourceAccessor")
-	}
+	// if iap {
+	// 	ds = append(ds, "https://www.googleapis.com/auth/iap.tunnelResourceAccessor")
+	// }
 	return ds
 }
 

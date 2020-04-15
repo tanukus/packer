@@ -67,6 +67,11 @@ func (b *Builder) Run(ctx context.Context, ui packer.Ui, hook packer.Hook) (pack
 		&StepInstanceInfo{
 			Debug: b.config.PackerDebug,
 		},
+		&StepStartTunnel{
+			IAP:           b.config.IAP,
+			CommConf:      &b.config.Comm,
+			LocalHostPort: b.config.IAPLocalhostPort,
+		},
 		&communicator.StepConnect{
 			Config:      &b.config.Comm,
 			Host:        communicator.CommHost(b.config.Comm.Host(), "instance_ip"),
