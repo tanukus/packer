@@ -68,9 +68,9 @@ func (b *Builder) Run(ctx context.Context, ui packer.Ui, hook packer.Hook) (pack
 			Debug: b.config.PackerDebug,
 		},
 		&StepStartTunnel{
-			IAP:           b.config.IAP,
-			CommConf:      &b.config.Comm,
-			LocalHostPort: b.config.IAPLocalhostPort,
+			IAPConf:     &b.config.IAPConfig,
+			CommConf:    &b.config.Comm,
+			AccountFile: b.config.AccountFile,
 		},
 		&communicator.StepConnect{
 			Config:      &b.config.Comm,
