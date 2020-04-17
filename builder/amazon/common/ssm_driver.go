@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
-	"sync"
 
 	"github.com/hashicorp/packer/packer"
 	"github.com/hashicorp/packer/template/interpolate"
@@ -14,8 +13,6 @@ import (
 type SSMDriver struct {
 	Ui  packer.Ui
 	Ctx *interpolate.Context
-
-	l sync.Mutex
 }
 
 // sessJson, region, "StartSession", profile, paramJson, endpoint
